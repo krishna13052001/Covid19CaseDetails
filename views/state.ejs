@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+    <meta charset="utf-8">
+    <title>Covid 19 Tracking App</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+    <div class="container">
+        <h1 class="text-center mt-5">Covid Cases Reposted in <%= stateCode %>
+        </h1>
+        <div class="container">
+            <div class="header">
+                <h3 class="text-center">State List</h3>
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>District Name</th>
+                            <th>Total Cases</th>
+                            <th>Total Active</th>
+                            <th>Total Recovered</th>
+                            <th>Total Deaths</th>
+                            <th>Newly repoted Cases</th>
+                            <th>Newly repoted Recovered </th>
+                            <th>Newly repoted Deaths </th>
+                        </tr>
+                    </thead>
+                    <tbody id="data">
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</body>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+    var stateCode = "<%= stateCode %>"
+    $(document).ready(function () {
+        init()
+        function init() {
+            var url = "https://api.covid19india.org/state_district_wise.json"
+            var data = ''
+            var date = ""
+            var time = ""
+            var value = ""
+            var arr = []
+            $.get(url, function (value) {
+                for (const state in value) {
+                    if (value[state]["statecode"] == stateCode) {
+                        for (const distData in value[state]["districtData"]) {
+                            data = `
+                                <tr>
+                                    <td>${distData}</td>
+                                    <td>${value[state]["districtData"][distData]["confirmed"]}</td>
+                                    <td>${value[state]["districtData"][distData]["active"]}</td>
+                                    <td>${value[state]["districtData"][distData]["recovered"]}</td>
+                                    <td>${value[state]["districtData"][distData]["deceased"]}</td>
+                                    <td>${value[state]["districtData"][distData]["delta"]["confirmed"]}</td>
+                                    <td>${value[state]["districtData"][distData]["recovered"]}</td>                                    
+                                    <td>${value[state]["districtData"][distData]["deceased"]}</td>
+                                </tr>
+                                `
+                            arr +=data
+                        }
+                    }
+                }
+
+                $("#data").html(arr);
+            })
+        }
+    })
+</script>
+</html>
