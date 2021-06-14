@@ -1,9 +1,6 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const path = require('path');
-const fetch = require("node-fetch");
-const { response } = require('express');
-
 
 const app = express()
 app.set("view engine", 'ejs');
@@ -25,4 +22,3 @@ app.use(bodyParser.urlencoded({
 }));
 
 app.listen(3000);
-
