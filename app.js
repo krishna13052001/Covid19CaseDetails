@@ -21,4 +21,4 @@ app.use(bodyParser.urlencoded({
     extended: false
 }));
 
-app.listen(3000,'0.0.0.0');
+app.listen(process.env.PORT);
