@@ -10,3 +10,6 @@ table,th,tr,td{
     border: 1px solid gray;
 }
 
+td > a:hover{
+    text-decoration: none;
+}
